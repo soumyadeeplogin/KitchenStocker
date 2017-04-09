@@ -1,7 +1,6 @@
 package com.stocker.exception;
 
 public class StockerCoreException extends Exception {
-	private static final long serialVersionUID = 1L;
 
 	public StockerCoreException() {
 		super();
@@ -14,5 +13,9 @@ public class StockerCoreException extends Exception {
 
 	public StockerCoreException(String message, Exception e) {
 		super(message, e);
+	}
+
+	public StockerCoreException(Exception e) {
+		super(e);
 	}
 }
