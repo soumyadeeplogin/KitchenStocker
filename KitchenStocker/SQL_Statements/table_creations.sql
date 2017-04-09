@@ -1,7 +1,7 @@
-drop table dapartment;
-create table dapartment (id int primary key not null, name varchar(299) not null, description varchar(1024));
+drop table department;
+create table department (id int primary key not null, name varchar(299) not null, description varchar(1024));
 drop table category;
-create table category (id int primary key  not null, name varchar(299) not null, description varchar(1024), dept_id int not null, foreign key (dept_id) references dapartment(id) on delete cascade);
+create table category (id int primary key  not null, name varchar(299) not null, description varchar(1024), dept_id int not null, foreign key (dept_id) references department(id) on delete cascade);
 drop table sub_category;
 create table sub_category (id int primary key  not null, name varchar(299) not null, description varchar(1024), cat_id int, foreign key (cat_id) references category(id)  on delete cascade);
 drop table item;
