@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- Connection settings -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://stocker.cc2ml4k9vlsh.us-west-2.rds.amazonaws.com:3306/stocker</property>
+		<property name="hibernate.connection.username">rootstocker</property>
+		<property name="hibernate.connection.password">r00tst0cker</property>
+
+		<!-- SQL dialect -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<!-- Print executed SQL to stdout -->
+		<property name="show_sql">true</property>
+
+
+		<!-- Annotated entity classes -->
+		<mapping resource="com/pragmatic/bookself/employee/employee.hbm.xml" />
+
+
+	</session-factory>
+
+</hibernate-configuration>

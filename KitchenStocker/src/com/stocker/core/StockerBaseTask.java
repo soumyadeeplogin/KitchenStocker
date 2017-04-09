@@ -1,5 +1,8 @@
 package com.stocker.core;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Transaction;
+
 import com.stocker.exception.StockerCoreException;
 
 /**
@@ -15,8 +18,18 @@ public abstract class StockerBaseTask {
 	 * 
 	 * @throws StockerCoreException
 	 */
-	public void init() throws StockerCoreException {
+	public void init(StockerSession session, StockerStorageContext context) throws StockerCoreException {
+		/*
+		 * todo : session check for existance of session
+		 */
 
+		Transaction transaction = null;
+		try {
+			transaction = context.getHibernateSession().beginTransaction();
+			context.setTransaction(transaction);
+		} catch (HibernateException | StockerCoreException e) {
+			throw new StockerCoreException(e);
+		}
 	}
 
 	/**
@@ -24,36 +37,53 @@ public abstract class StockerBaseTask {
 	 * 
 	 * @throws StockerCoreException
 	 */
-	public void close() throws StockerCoreException {
-
-	}
-
-	/**
-	 * 
-	 * @return
-	 * @throws StockerCoreException
-	 */
-	public StockerBaseResult<Object> execute() throws StockerCoreException {
-		StockerBaseResult<Object> stockerBaseResult = new StockerBaseResult<>();
+	public void close(StockerSession session, StockerStorageContext context) throws StockerCoreException {
 		try {
-			stockerBaseResult = executeTask();
+			context.close();
 		} catch (Exception e) {
 			throw new StockerCoreException(e);
 		}
-		return stockerBaseResult;
 	}
-
-	/**
-	 * 
-	 * @throws StockerCoreException
-	 */
-	protected abstract void validateParameter() throws StockerCoreException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws StockerCoreException
 	 */
-	protected abstract StockerBaseResult<Object> executeTask() throws StockerCoreException;
+	public StockerBaseResult<Object> executeTask(StockerSession session, StockerStorageContext context)
+			throws StockerCoreException {
+		StockerBaseResult<Object> result = null;
+		try {
+			init(session, context);
+			validateParameter(session, context);
+			result = execute(session, context);
+			context.commitTransaction();
+		} catch (Exception e) {
+			context.rollbackTransaction();
+			throw new StockerCoreException(e);
+		} finally {
+			try {
+				close(session, context);
+			} catch (Exception e) {
+				throw new StockerCoreException(e);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * @throws StockerCoreException
+	 */
+	protected abstract void validateParameter(StockerSession session, StockerStorageContext context)
+			throws StockerCoreException;
+
+	/**
+	 * 
+	 * @return
+	 * @throws StockerCoreException
+	 */
+	protected abstract StockerBaseResult<Object> execute(StockerSession session, StockerStorageContext context)
+			throws StockerCoreException;
 
 }
