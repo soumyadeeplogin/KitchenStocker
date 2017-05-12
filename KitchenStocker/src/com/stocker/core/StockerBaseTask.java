@@ -11,7 +11,7 @@ import com.stocker.exception.StockerCoreException;
  * @author amar
  *
  */
-public abstract class StockerBaseTask {
+public abstract class StockerBaseTask<T> {
 
 	/**
 	 * method to initialize all the required hibernate configuration
@@ -50,9 +50,9 @@ public abstract class StockerBaseTask {
 	 * @return
 	 * @throws StockerCoreException
 	 */
-	public StockerBaseResult<Object> executeTask(StockerSession session, StockerStorageContext context)
+	public StockerBaseResult<T> executeTask(StockerSession session, StockerStorageContext context)
 			throws StockerCoreException {
-		StockerBaseResult<Object> result = null;
+		StockerBaseResult<T> result = null;
 		try {
 			init(session, context);
 			validateParameter(session, context);
@@ -83,7 +83,7 @@ public abstract class StockerBaseTask {
 	 * @return
 	 * @throws StockerCoreException
 	 */
-	protected abstract StockerBaseResult<Object> execute(StockerSession session, StockerStorageContext context)
+	protected abstract StockerBaseResult<T> execute(StockerSession session, StockerStorageContext context)
 			throws StockerCoreException;
 
 }
