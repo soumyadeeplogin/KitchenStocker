@@ -3,15 +3,24 @@
  */
 package com.stocker.department;
 
+import javax.persistence.*;
+
 /**
  * Class denoting the department entity
  * 
  * @author amar
  *
  */
+@Entity
+@Table(name = "department")
 public class DepartmentEntity {
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	private int id;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "description")
 	private String description;
 
 	/**

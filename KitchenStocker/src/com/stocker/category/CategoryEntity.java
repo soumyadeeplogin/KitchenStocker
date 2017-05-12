@@ -3,14 +3,24 @@
  */
 package com.stocker.category;
 
+import javax.persistence.*;
+
 /**
  * @author amar
  *
  */
+@Entity
+@Table(name = "category")
 public class CategoryEntity {
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	private int id;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "description")
 	private String description;
+	@Column(name = "dept_id")
 	private int deptId;
 
 	/**
