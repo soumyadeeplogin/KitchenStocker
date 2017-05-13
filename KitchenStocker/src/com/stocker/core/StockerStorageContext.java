@@ -160,7 +160,7 @@ public class StockerStorageContext {
 	private void closeSession() throws StockerCoreException {
 		if (session != null) {
 			try {
-				session.flush();
+				//session.flush();
 				session.close();
 			} catch (HibernateException hbe) {
 				throw new StockerCoreException(hbe);
