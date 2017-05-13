@@ -34,6 +34,14 @@ public class DepartmentStorageManager {
 		return instance;
 	}
 
+	/**
+	 * Adds new department entry in the system.
+	 * 
+	 * @param departmentEntity
+	 * @param context
+	 * @return
+	 * @throws StockerCoreException
+	 */
 	public Integer addNewDepartment(DepartmentEntity departmentEntity, StockerStorageContext context)
 			throws StockerCoreException {
 		Integer id = 0;
